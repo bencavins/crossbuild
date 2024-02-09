@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 
@@ -22,10 +23,19 @@ class Word(db.Model, SerializerMixin):
     )
 
     id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.String, nullable=False)
+    _word = db.Column("word", db.String, nullable=False)
     clue = db.Column(db.String, nullable=False)
     length = db.Column(db.Integer, nullable=False)
     usage_date = db.Column(db.DateTime)
+
+    @hybrid_property
+    def word(self):
+        return self._word
+    
+    @word.setter
+    def word(self, value):
+        self._word = value
+        self.length = len(value) if value is not None else None
 
     def __repr__(self):
         return f"<Word {self.word} {self.length}>"
