@@ -12,3 +12,20 @@ metadata = MetaData(naming_convention={
 })
 
 db = SQLAlchemy(metadata=metadata)
+
+
+class Word(db.Model, SerializerMixin):
+    __tablename__ = 'words'
+
+    __table_args__ = (
+        db.CheckConstraint('LENGTH(word) = length', 'check_word_len'),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String, nullable=False)
+    clue = db.Column(db.String, nullable=False)
+    length = db.Column(db.Integer, nullable=False)
+    usage_date = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return f"<Word {self.word} {self.length}>"
