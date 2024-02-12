@@ -26,7 +26,7 @@ class Word(db.Model, SerializerMixin):
     _word = db.Column("word", db.String, nullable=False)
     clue = db.Column(db.String, nullable=False)
     length = db.Column(db.Integer, nullable=False)
-    usage_date = db.Column(db.DateTime)
+    usage_date = db.Column(db.Date)
 
     @hybrid_property
     def word(self):
