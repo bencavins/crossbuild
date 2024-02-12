@@ -22,6 +22,8 @@ class Word(db.Model, SerializerMixin):
         db.CheckConstraint('LENGTH(word) = length', 'check_word_len'),
     )
 
+    serialize_rules = ['-_word', 'word']  # ignore _word, add word
+
     id = db.Column(db.Integer, primary_key=True)
     _word = db.Column("word", db.String, nullable=False)
     clue = db.Column(db.String, nullable=False)
