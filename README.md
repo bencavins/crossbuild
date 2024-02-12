@@ -8,14 +8,12 @@ Located in [backend/datasets/nytcrosswords.csv](./backend/datasets/nytcrosswords
 
 ## API Routes
 
-### GET /api/words
+### GET /api/words/length/\<int:length\>
 
-Get all words & clues
+Get all words & clues where word length is `length`
 
-#### Query Parameters:
+### GET /api/words/like/\<string:pattern\>
 
-| Param | Description | Type |
-|-------|-------------|------|
-| length | Filter on word length | integer |
-| like | Filter on like words (e.g. "LO-E" matches "LOVE" and "LOBE") | string
-
+Get all words & clues where word matches the `pattern`.
+Dashes are wildcards in the `pattern`. For example, the pattern "LO-E" matches
+the words "LOVE" and "LOBE" but not "DOVE".
