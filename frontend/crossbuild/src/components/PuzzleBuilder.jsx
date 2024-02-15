@@ -19,7 +19,7 @@ export default function PuzzleBuilder() {
   return (
     <>
       <h1>Build</h1>
-      <SquareGrid />
+      <SquareGrid size={5} />
     </>
   )
 }
