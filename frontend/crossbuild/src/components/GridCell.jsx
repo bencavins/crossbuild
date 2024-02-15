@@ -1,14 +1,6 @@
-import { useState } from "react"
-
-export default function GridCell({ value }) {
-  const [isBlack, setIsBlack] = useState(false)
-
-  function handleClick() {
-    setIsBlack(value => !value)
-  }
-
+export default function GridCell({ value, i, j, isBlack, handleClick }) {
   return (
-    <td className={isBlack ? "black-cell" : ""} onClick={handleClick}>
+    <td className={isBlack ? "black-cell" : ""} onClick={() => handleClick(i, j)}>
       {value}
     </td>
   )
