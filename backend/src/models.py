@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
-from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
-from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 
 metadata = MetaData(naming_convention={
@@ -22,13 +21,11 @@ class Word(db.Model, SerializerMixin):
         db.CheckConstraint('LENGTH(word) = length', 'check_word_len'),
     )
 
-    serialize_rules = ['-_word', 'word']  # ignore _word, add word
-
     id = db.Column(db.Integer, primary_key=True)
     _word = db.Column("word", db.String, nullable=False)
-    clue = db.Column(db.String, nullable=False)
     length = db.Column(db.Integer, nullable=False)
-    usage_date = db.Column(db.Date)
+
+    clues = db.relationship('Clue', back_populates='word')
 
     @hybrid_property
     def word(self):
@@ -39,5 +36,51 @@ class Word(db.Model, SerializerMixin):
         self._word = value
         self.length = len(value) if value is not None else None
 
+    serialize_rules = ['-_word', 'word', '-clues.word']
+    
     def __repr__(self):
         return f"<Word {self.word} {self.length}>"
+
+
+class Clue(db.Model, SerializerMixin):
+    __tablename__ = 'clues'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String, nullable=False)
+    usage_date = db.Column(db.Date)
+    word_id = db.Column(db.Integer, db.ForeignKey('words.id'))
+
+    word = db.relationship('Word', back_populates='clues')
+
+    serialize_rules = ['-word.clues']
+
+    def __repr__(self):
+        return f"<Clue {self.text} {self.usage_date}>"
+
+
+# class Word(db.Model, SerializerMixin):
+#     __tablename__ = 'words'
+
+#     __table_args__ = (
+#         db.CheckConstraint('LENGTH(word) = length', 'check_word_len'),
+#     )
+
+#     serialize_rules = ['-_word', 'word']  # ignore _word, add word
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     _word = db.Column("word", db.String, nullable=False)
+#     clue = db.Column(db.String, nullable=False)
+#     length = db.Column(db.Integer, nullable=False)
+#     usage_date = db.Column(db.Date)
+
+#     @hybrid_property
+#     def word(self):
+#         return self._word
+    
+#     @word.setter
+#     def word(self, value):
+#         self._word = value
+#         self.length = len(value) if value is not None else None
+
+#     def __repr__(self):
+#         return f"<Word {self.word} {self.length}>"
