@@ -26,38 +26,6 @@ def build_dict():
     return data
 
 
-def load_words():
-    with open(DATASET_PATH, 'r', encoding='iso-8859-1') as f:
-        reader = csv.reader(f, delimiter=',')
-
-        # Date, Word, Clue
-        next(reader)  # skip header
-
-        for row in reader:
-            word = Word(
-                word=row[1]
-            )
-            db.session.add(word)
-    db.session.commit()
-
-
-def load_clues():
-    with open(DATASET_PATH, 'r', encoding='iso-8859-1') as f:
-        reader = csv.reader(f, delimiter=',')
-
-        # Date, Word, Clue
-        next(reader)  # skip header
-
-        for row in reader:
-            # query for existing word
-            word = Word.query.filter(Word.word == word).first()
-            clue = Clue(
-                text=row[2],
-                usage_date=row[0],
-                word=word
-            )
-
-
 def add_to_db(data):
     for word_text in data:
         word = Word(word=word_text)
