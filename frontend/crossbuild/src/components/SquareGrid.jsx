@@ -3,6 +3,8 @@ import './SquareGrid.css'
 import GridRow from './GridRow'
 
 export default function SquareGrid({ size }) {
+
+  // build rows
   const rows = []
   for (let i = 0; i < size; i++) {
     rows.push(<GridRow key={i} cols={size} />)
