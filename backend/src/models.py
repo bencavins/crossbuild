@@ -36,7 +36,7 @@ class Word(db.Model, SerializerMixin):
         self._word = value
         self.length = len(value) if value is not None else None
 
-    serialize_rules = ['-_word', 'word', '-clues.word']
+    serialize_rules = ['-_word', 'word', '-clues']
     
     def __repr__(self):
         return f"<Word {self.word} {self.length}>"
@@ -56,31 +56,3 @@ class Clue(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<Clue {self.text} {self.usage_date}>"
-
-
-# class Word(db.Model, SerializerMixin):
-#     __tablename__ = 'words'
-
-#     __table_args__ = (
-#         db.CheckConstraint('LENGTH(word) = length', 'check_word_len'),
-#     )
-
-#     serialize_rules = ['-_word', 'word']  # ignore _word, add word
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     _word = db.Column("word", db.String, nullable=False)
-#     clue = db.Column(db.String, nullable=False)
-#     length = db.Column(db.Integer, nullable=False)
-#     usage_date = db.Column(db.Date)
-
-#     @hybrid_property
-#     def word(self):
-#         return self._word
-    
-#     @word.setter
-#     def word(self, value):
-#         self._word = value
-#         self.length = len(value) if value is not None else None
-
-#     def __repr__(self):
-#         return f"<Word {self.word} {self.length}>"
