@@ -1,0 +1,18 @@
+.grid-container {
+  margin: auto;
+  overflow: auto;
+  border-collapse: collapse;
+}
+
+td {
+  width: 40px;
+  height: 40px;
+  border: 1px solid;
+  text-align: center;
+  font-size: 26px;
+}
+
+.black-cell {
+  color: black;
+  background-color: black;
+}
