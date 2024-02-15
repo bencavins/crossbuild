@@ -5,7 +5,7 @@ export default function GridRow({ cols }) {
   // build array of cells
   const rows = []
   for (let i = 0; i < cols; i++) {
-    rows.push(<GridCell value={i} />)
+    rows.push(<GridCell key={i} value={i} />)
   }
 
   return (
