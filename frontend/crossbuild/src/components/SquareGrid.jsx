@@ -15,15 +15,8 @@ function buildDefaultGridData(n) {
   return grid
 }
 
-export default function SquareGrid({ size }) {
-  const [grid, setGrid] = useState(buildDefaultGridData(size))
-
-  function handleClick(i, j) {
-    // copy matrix
-    const gridCopy = grid.map(row => [...row])
-    gridCopy[i][j] = gridCopy[i][j] ? 0 : -1
-    setGrid(gridCopy)
-  }
+export default function SquareGrid({ grid, handleClick }) {
+  // const [grid, setGrid] = useState(buildDefaultGridData(size))
 
   // build rows
   const rows = []
