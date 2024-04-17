@@ -24,6 +24,8 @@ function autoNumberGrid(grid) {
             if (needsNumber(i, j, grid)) {
                 grid[i][j].number = n
                 n++
+            } else {
+                grid[i][j].number = null
             }
         }
     }

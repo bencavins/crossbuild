@@ -8,9 +8,10 @@ export default function GridRow({ i, rowData, handleClick }) {
     cells.push(
       <GridCell 
         key={j}  
-        value={rowData[j].number ? rowData[j].number : rowData[j].value} 
+        value={rowData[j].value} 
         i={i} 
         j={j} 
+        number={rowData[j].number}
         isBlack={rowData[j].isBlack} 
         handleClick={handleClick} 
       />
