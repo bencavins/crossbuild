@@ -16,3 +16,9 @@ td {
   color: black;
   background-color: black;
 }
+
+.grid-cell-number {
+  position: absolute;
+  font-size: 8px;
+  margin-top: 0;
+}

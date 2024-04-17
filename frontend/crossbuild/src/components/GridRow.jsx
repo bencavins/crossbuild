@@ -2,16 +2,17 @@ import GridCell from "./GridCell"
 
 export default function GridRow({ i, rowData, handleClick }) {
   
-  // build cells
+  // render cells
   const cells = []
   for (let j = 0; j < rowData.length; j++) {
     cells.push(
       <GridCell 
-        key={j} 
-        value={j} 
+        key={j}  
+        value={rowData[j].value} 
         i={i} 
         j={j} 
-        isBlack={rowData[j] == -1} 
+        number={rowData[j].number}
+        isBlack={rowData[j].isBlack} 
         handleClick={handleClick} 
       />
     )
