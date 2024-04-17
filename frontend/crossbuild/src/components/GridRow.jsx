@@ -2,7 +2,7 @@ import GridCell from "./GridCell"
 
 export default function GridRow({ i, rowData, handleClick }) {
   
-  // build cells
+  // render cells
   const cells = []
   for (let j = 0; j < rowData.length; j++) {
     cells.push(

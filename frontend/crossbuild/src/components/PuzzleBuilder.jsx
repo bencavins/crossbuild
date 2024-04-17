@@ -30,13 +30,12 @@ function buildDefaultGridData(n) {
 
 export default function PuzzleBuilder() {
   // const [puzzle, setPuzzle] = useState(defaultPuzzle)
-  const [grid, setGrid] = useState(buildDefaultGridData(5))
+  const [grid, setGrid] = useState(buildDefaultGridData(7))
 
   function handleClick(i, j) {
     // copy matrix
     const gridCopy = grid.map(row => [...row])
     gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
-    // gridCopy[i][j] = -1
     setGrid(autoNumberGrid(gridCopy))
   }
 
