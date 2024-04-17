@@ -7,8 +7,8 @@ export default function GridRow({ i, rowData, handleClick }) {
   for (let j = 0; j < rowData.length; j++) {
     cells.push(
       <GridCell 
-        key={j} 
-        value={j} 
+        key={j}  
+        value={rowData[j]} 
         i={i} 
         j={j} 
         isBlack={rowData[j] == -1} 

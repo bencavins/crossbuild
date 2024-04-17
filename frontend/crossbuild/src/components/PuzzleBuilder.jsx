@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import SquareGrid from "./SquareGrid"
+import autoNumberGrid from "../util"
 
 const defaultPuzzle = {
   'title': 'Default',
@@ -14,11 +15,11 @@ function buildDefaultGridData(n) {
   for (let i = 0; i < n; i++) {
     const row = []
     for (let j = 0; j < n; j++) {
-      row.push(0)
+      row.push("X")
     }
     grid.push(row)
   }
-  return grid
+  return autoNumberGrid(grid)
 }
 
 export default function PuzzleBuilder() {
@@ -28,8 +29,9 @@ export default function PuzzleBuilder() {
   function handleClick(i, j) {
     // copy matrix
     const gridCopy = grid.map(row => [...row])
-    gridCopy[i][j] = gridCopy[i][j] ? 0 : -1
-    setGrid(gridCopy)
+    gridCopy[i][j] = gridCopy[i][j] === -1 ? "X" : -1
+    // gridCopy[i][j] = -1
+    setGrid(autoNumberGrid(gridCopy))
   }
 
   return (

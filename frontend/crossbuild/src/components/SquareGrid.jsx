@@ -1,19 +1,19 @@
 import './SquareGrid.css'
 
 import GridRow from './GridRow'
-import { useState } from 'react'
+// import { useState } from 'react'
 
-function buildDefaultGridData(n) {
-  const grid = []
-  for (let i = 0; i < n; i++) {
-    const row = []
-    for (let j = 0; j < n; j++) {
-      row.push(0)
-    }
-    grid.push(row)
-  }
-  return grid
-}
+// function buildDefaultGridData(n) {
+//   const grid = []
+//   for (let i = 0; i < n; i++) {
+//     const row = []
+//     for (let j = 0; j < n; j++) {
+//       row.push(0)
+//     }
+//     grid.push(row)
+//   }
+//   return grid
+// }
 
 export default function SquareGrid({ grid, handleClick }) {
   // const [grid, setGrid] = useState(buildDefaultGridData(size))
