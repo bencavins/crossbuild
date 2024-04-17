@@ -9,7 +9,7 @@ function isOutOfBounds(i, j, grid) {
 }
 
 function isBlackSquare(i, j, grid) {
-    return grid[i][j] === -1
+    return grid[i][j].isBlack
 }
 
 function needsNumber(i, j, grid) {
@@ -22,7 +22,7 @@ function autoNumberGrid(grid) {
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             if (needsNumber(i, j, grid)) {
-                grid[i][j] = n
+                grid[i][j].number = n
                 n++
             }
         }

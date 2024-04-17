@@ -15,7 +15,13 @@ function buildDefaultGridData(n) {
   for (let i = 0; i < n; i++) {
     const row = []
     for (let j = 0; j < n; j++) {
-      row.push("X")
+      row.push({
+        i: i,
+        j: j,
+        value: 'X',
+        isBlack: false,
+        number: null
+      })
     }
     grid.push(row)
   }
@@ -29,7 +35,7 @@ export default function PuzzleBuilder() {
   function handleClick(i, j) {
     // copy matrix
     const gridCopy = grid.map(row => [...row])
-    gridCopy[i][j] = gridCopy[i][j] === -1 ? "X" : -1
+    gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
     // gridCopy[i][j] = -1
     setGrid(autoNumberGrid(gridCopy))
   }
