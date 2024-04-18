@@ -5,7 +5,7 @@ import ClueBank from "./ClueBank"
 import { autoNumberGrid, isAcross, isDown } from "../util"
 
 const defaultPuzzle = {
-  'title': 'Default',
+  'title': 'Default Title',
   'grid': buildDefaultGridData(7),
   'clues': {
     'across': {},
@@ -69,7 +69,7 @@ export default function PuzzleBuilder() {
   return (
     <>
       <h1>Build</h1>
-      <h1>{puzzle.title}</h1>
+      <h2>{puzzle.title}</h2>
       <SquareGrid grid={puzzle.grid} handleClick={handleClick} />
       <ClueBank clues={puzzle.clues} answers={puzzle.answers} />
     </>
