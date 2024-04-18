@@ -4,17 +4,13 @@ import SquareGrid from "./SquareGrid"
 import ClueBank from "./ClueBank"
 import { autoNumberGrid, isAcross, isDown } from "../util"
 
-const defaultPuzzle = {
-  'title': 'Default Title',
-  'grid': buildDefaultGridData(7),
-  'clues': {
-    'across': {},
-    'down': {},
-  },
-  'answers': {
-    'across': {},
-    'down': {},
-  },
+function buildDefaultPuzzle() {
+  const puzzle = {
+    'title': 'Default Title',
+    'grid': buildDefaultGridData(7),
+  }
+  puzzle.clues = getClues(puzzle.grid)
+  return puzzle
 }
 
 function buildDefaultGridData(n) {
@@ -35,25 +31,25 @@ function buildDefaultGridData(n) {
   return autoNumberGrid(grid)
 }
 
-export default function PuzzleBuilder() {
-  const [puzzle, setPuzzle] = useState(defaultPuzzle)
-
-  function getClues(grid) {
-    const clues = {
-      across: {},
-      down: {}
-    }
-    for (let row of grid) {
-      for (let cell of row) {
-        if (cell.number) {
-          if (isAcross(cell, grid)) {
-            clues.across[cell.number] = {'text': `Test clue ${cell.number}A`}
-          }
-          if (isDown(cell, grid)) {
-            clues.down[cell.number] = {'text': `Test clue ${cell.number}D`}
-    }}}}
-    return clues
+function getClues(grid) {
+  const clues = {
+    across: {},
+    down: {}
   }
+  for (let row of grid) {
+    for (let cell of row) {
+      if (cell.number) {
+        if (isAcross(cell, grid)) {
+          clues.across[cell.number] = {'text': `Test clue ${cell.number}A`}
+        }
+        if (isDown(cell, grid)) {
+          clues.down[cell.number] = {'text': `Test clue ${cell.number}D`}
+  }}}}
+  return clues
+}
+
+export default function PuzzleBuilder() {
+  const [puzzle, setPuzzle] = useState(buildDefaultPuzzle())
 
   function handleClick(i, j) {
     // copy puzzle 
@@ -61,7 +57,9 @@ export default function PuzzleBuilder() {
     // why am i copying the grid? is this needed anymore?
     const gridCopy = puzzleCopy.grid.map(row => [...row])
     gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
+    // renumber the grid
     puzzleCopy.grid = autoNumberGrid(gridCopy)
+    // rebuild the clue stubs
     puzzleCopy.clues = getClues(puzzleCopy.grid)
     setPuzzle(puzzleCopy)
   }
