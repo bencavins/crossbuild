@@ -1,13 +1,20 @@
 import { useState } from "react"
 
 import SquareGrid from "./SquareGrid"
-import autoNumberGrid from "../util"
+import ClueBank from "./ClueBank"
+import { autoNumberGrid, isAcross, isDown } from "../util"
 
 const defaultPuzzle = {
   'title': 'Default',
   'grid': buildDefaultGridData(7),
-  'clues': {},
-  'answers': {},
+  'clues': {
+    'across': {},
+    'down': {},
+  },
+  'answers': {
+    'across': {},
+    'down': {},
+  },
 }
 
 function buildDefaultGridData(n) {
@@ -31,6 +38,23 @@ function buildDefaultGridData(n) {
 export default function PuzzleBuilder() {
   const [puzzle, setPuzzle] = useState(defaultPuzzle)
 
+  function getClues(grid) {
+    const clues = {
+      across: {},
+      down: {}
+    }
+    for (let row of grid) {
+      for (let cell of row) {
+        if (cell.number) {
+          if (isAcross(cell, grid)) {
+            clues.across[cell.number] = {'text': `Test clue ${cell.number}A`}
+          }
+          if (isDown(cell, grid)) {
+            clues.down[cell.number] = {'text': `Test clue ${cell.number}D`}
+    }}}}
+    return clues
+  }
+
   function handleClick(i, j) {
     // copy puzzle 
     const puzzleCopy = {...puzzle}
@@ -38,13 +62,16 @@ export default function PuzzleBuilder() {
     const gridCopy = puzzleCopy.grid.map(row => [...row])
     gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
     puzzleCopy.grid = autoNumberGrid(gridCopy)
+    puzzleCopy.clues = getClues(puzzleCopy.grid)
     setPuzzle(puzzleCopy)
   }
 
   return (
     <>
       <h1>Build</h1>
+      <h1>{puzzle.title}</h1>
       <SquareGrid grid={puzzle.grid} handleClick={handleClick} />
+      <ClueBank clues={puzzle.clues} answers={puzzle.answers} />
     </>
   )
 }
