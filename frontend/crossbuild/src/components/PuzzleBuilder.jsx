@@ -1,13 +1,16 @@
 import { useState } from "react"
 
 import SquareGrid from "./SquareGrid"
-import autoNumberGrid from "../util"
+import ClueBank from "./ClueBank"
+import { autoNumberGrid, isAcross, isDown } from "../util"
 
-const defaultPuzzle = {
-  'title': 'Default',
-  'grid': buildDefaultGridData(5),
-  'clues': {},
-  'answers': {},
+function buildDefaultPuzzle() {
+  const puzzle = {
+    'title': 'Default Title',
+    'grid': buildDefaultGridData(7),
+  }
+  puzzle.clues = getClues(puzzle.grid)
+  return puzzle
 }
 
 function buildDefaultGridData(n) {
@@ -28,21 +31,45 @@ function buildDefaultGridData(n) {
   return autoNumberGrid(grid)
 }
 
+function getClues(grid) {
+  const clues = {
+    across: {},
+    down: {}
+  }
+  for (let row of grid) {
+    for (let cell of row) {
+      if (cell.number) {
+        if (isAcross(cell, grid)) {
+          clues.across[cell.number] = {'text': `Test clue ${cell.number}A`}
+        }
+        if (isDown(cell, grid)) {
+          clues.down[cell.number] = {'text': `Test clue ${cell.number}D`}
+  }}}}
+  return clues
+}
+
 export default function PuzzleBuilder() {
-  // const [puzzle, setPuzzle] = useState(defaultPuzzle)
-  const [grid, setGrid] = useState(buildDefaultGridData(7))
+  const [puzzle, setPuzzle] = useState(buildDefaultPuzzle())
 
   function handleClick(i, j) {
-    // copy matrix
-    const gridCopy = grid.map(row => [...row])
+    // copy puzzle 
+    const puzzleCopy = {...puzzle}
+    // why am i copying the grid? is this needed anymore?
+    const gridCopy = puzzleCopy.grid.map(row => [...row])
     gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
-    setGrid(autoNumberGrid(gridCopy))
+    // renumber the grid
+    puzzleCopy.grid = autoNumberGrid(gridCopy)
+    // rebuild the clue stubs
+    puzzleCopy.clues = getClues(puzzleCopy.grid)
+    setPuzzle(puzzleCopy)
   }
 
   return (
     <>
       <h1>Build</h1>
-      <SquareGrid grid={grid} handleClick={handleClick} />
+      <h2>{puzzle.title}</h2>
+      <SquareGrid grid={puzzle.grid} handleClick={handleClick} />
+      <ClueBank clues={puzzle.clues} answers={puzzle.answers} />
     </>
   )
 }
