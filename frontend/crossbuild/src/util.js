@@ -35,6 +35,7 @@ export function autoNumberGrid(grid) {
 /**
  * Returns true if the cell begins an across clue
  * @param {[object]} cell 
+ * @param {[matrix]} grid 
  */
 export function isAcross(cell, grid) {
     return cell.number && (isOutOfBounds(cell.i, cell.j-1, grid) || isBlackSquare(cell.i, cell.j-1, grid))
@@ -43,7 +44,41 @@ export function isAcross(cell, grid) {
 /**
  * Returns true if the cell begins a down clue
  * @param {[object]} cell 
+ * @param {[matrix]} grid 
  */
 export function isDown(cell, grid) {
     return cell.number && (isOutOfBounds(cell.i-1, cell.j, grid) || isBlackSquare(cell.i-1, cell.j, grid))
+}
+
+/**
+ * Returns the length of an across answer starting at this cell
+ * @param {[object]} cell 
+ * @param {[matrix]} grid 
+ */
+export function getAcrossLength(cell, grid) {
+    let curr_i = cell.i
+    let curr_j = cell.j
+    let length = 0
+    while (!isOutOfBounds(curr_i, curr_j, grid) && !isBlackSquare(curr_i, curr_j, grid)) {
+        curr_j++
+        length++
+    }
+    return length
+}
+
+/**
+ * Returns the length of a down answer starting at this cell
+ * @param {[object]} cell 
+ * @param {[matrix]} grid 
+ */
+export function getDownLength(cell, grid) {
+    let curr_i = cell.i
+    let curr_j = cell.j
+    let length = 0
+    console.log(curr_i, curr_j, length)
+    while (!isOutOfBounds(curr_i, curr_j, grid) && !isBlackSquare(curr_i, curr_j, grid)) {
+        curr_i++
+        length++
+    }
+    return length
 }
