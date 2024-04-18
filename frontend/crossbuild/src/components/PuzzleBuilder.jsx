@@ -5,7 +5,7 @@ import autoNumberGrid from "../util"
 
 const defaultPuzzle = {
   'title': 'Default',
-  'grid': buildDefaultGridData(5),
+  'grid': buildDefaultGridData(7),
   'clues': {},
   'answers': {},
 }
@@ -29,20 +29,22 @@ function buildDefaultGridData(n) {
 }
 
 export default function PuzzleBuilder() {
-  // const [puzzle, setPuzzle] = useState(defaultPuzzle)
-  const [grid, setGrid] = useState(buildDefaultGridData(7))
+  const [puzzle, setPuzzle] = useState(defaultPuzzle)
 
   function handleClick(i, j) {
-    // copy matrix
-    const gridCopy = grid.map(row => [...row])
+    // copy puzzle 
+    const puzzleCopy = {...puzzle}
+    // why am i copying the grid? is this needed anymore?
+    const gridCopy = puzzleCopy.grid.map(row => [...row])
     gridCopy[i][j].isBlack = !gridCopy[i][j].isBlack
-    setGrid(autoNumberGrid(gridCopy))
+    puzzleCopy.grid = autoNumberGrid(gridCopy)
+    setPuzzle(puzzleCopy)
   }
 
   return (
     <>
       <h1>Build</h1>
-      <SquareGrid grid={grid} handleClick={handleClick} />
+      <SquareGrid grid={puzzle.grid} handleClick={handleClick} />
     </>
   )
 }
