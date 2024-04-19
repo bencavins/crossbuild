@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import SquareGrid from "./SquareGrid"
 import ClueBank from "./ClueBank"
-import { autoNumberGrid, isAcross, isDown } from "../util"
+import { autoNumberGrid, isAcross, isDown, getAcrossLength, getDownLength } from "../util"
 
 function buildDefaultPuzzle() {
   const puzzle = {
@@ -21,7 +21,7 @@ function buildDefaultGridData(n) {
       row.push({
         i: i,
         j: j,
-        value: 'X',
+        value: '',
         isBlack: false,
         number: null
       })
@@ -40,10 +40,20 @@ function getClues(grid) {
     for (let cell of row) {
       if (cell.number) {
         if (isAcross(cell, grid)) {
-          clues.across[cell.number] = {'text': `Test clue ${cell.number}A`}
+          const n = getAcrossLength(cell, grid)
+          clues.across[cell.number] = {
+            'text': `Test clue ${cell.number}A`,
+            'answer': 'X'.repeat(n),
+            'length': n
+          }
         }
         if (isDown(cell, grid)) {
-          clues.down[cell.number] = {'text': `Test clue ${cell.number}D`}
+          const n = getDownLength(cell, grid)
+          clues.down[cell.number] = {
+            'text': `Test clue ${cell.number}D`,
+            'answer': 'X'.repeat(n),
+            'length': n
+          }
   }}}}
   return clues
 }
