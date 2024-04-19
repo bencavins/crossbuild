@@ -21,7 +21,7 @@ function buildDefaultGridData(n) {
       row.push({
         i: i,
         j: j,
-        value: 'X',
+        value: '',
         isBlack: false,
         number: null
       })
