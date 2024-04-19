@@ -40,17 +40,19 @@ function getClues(grid) {
     for (let cell of row) {
       if (cell.number) {
         if (isAcross(cell, grid)) {
+          const n = getAcrossLength(cell, grid)
           clues.across[cell.number] = {
             'text': `Test clue ${cell.number}A`,
-            'answer': 'test answer',
-            'length': getAcrossLength(cell, grid)
+            'answer': 'X'.repeat(n),
+            'length': n
           }
         }
         if (isDown(cell, grid)) {
+          const n = getDownLength(cell, grid)
           clues.down[cell.number] = {
             'text': `Test clue ${cell.number}D`,
-            'answer': 'test answer',
-            'length': getDownLength(cell, grid)
+            'answer': 'X'.repeat(n),
+            'length': n
           }
   }}}}
   return clues
