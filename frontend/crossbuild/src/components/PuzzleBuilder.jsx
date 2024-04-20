@@ -85,6 +85,8 @@ function populateAnswers(puzzle) {
   Object.entries(puzzle.clues.across).forEach(([num, data]) => {
     fillAcross(data.i, data.j, data.answer, puzzle)
   })
+
+  // TODO down? does across take care of everything?
 }
 
 export default function PuzzleBuilder() {
@@ -100,6 +102,7 @@ export default function PuzzleBuilder() {
     puzzleCopy.grid = autoNumberGrid(gridCopy)
     // rebuild the clue stubs
     puzzleCopy.clues = getClues(puzzleCopy.grid)
+    populateAnswers(puzzle)
     setPuzzle(puzzleCopy)
   }
 
