@@ -10,6 +10,7 @@ function buildDefaultPuzzle() {
     'grid': buildDefaultGridData(7),
   }
   puzzle.clues = getClues(puzzle.grid)
+  populateAnswers(puzzle)
   return puzzle
 }
 
@@ -44,7 +45,9 @@ function getClues(grid) {
           clues.across[cell.number] = {
             'text': `Test clue ${cell.number}A`,
             'answer': 'X'.repeat(n),
-            'length': n
+            'length': n,
+            'i': cell.i,
+            'j': cell.j,
           }
         }
         if (isDown(cell, grid)) {
@@ -52,10 +55,36 @@ function getClues(grid) {
           clues.down[cell.number] = {
             'text': `Test clue ${cell.number}D`,
             'answer': 'X'.repeat(n),
-            'length': n
+            'length': n,
+            'i': cell.i,
+            'j': cell.j,
           }
   }}}}
   return clues
+}
+
+/**
+ * Fills puzzle grid values across with data from word starting at coords i, j.
+ * @param {*} i 
+ * @param {*} j 
+ * @param {*} word 
+ * @param {*} puzzle 
+ */
+function fillAcross(i, j, word, puzzle) {
+  for (let j_prime = 0; j_prime < word.length; j_prime++) {
+    puzzle.grid[i][j+j_prime].value = word[j_prime]
+  }
+}
+
+function fillDown(i, j, word, puzzle) {
+
+}
+
+function populateAnswers(puzzle) {
+  // loop over answers
+  Object.entries(puzzle.clues.across).forEach(([num, data]) => {
+    fillAcross(data.i, data.j, data.answer, puzzle)
+  })
 }
 
 export default function PuzzleBuilder() {
