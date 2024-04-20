@@ -75,7 +75,6 @@ export function getDownLength(cell, grid) {
     let curr_i = cell.i
     let curr_j = cell.j
     let length = 0
-    console.log(curr_i, curr_j, length)
     while (!isOutOfBounds(curr_i, curr_j, grid) && !isBlackSquare(curr_i, curr_j, grid)) {
         curr_i++
         length++
