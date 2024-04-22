@@ -76,8 +76,17 @@ function fillAcross(i, j, word, puzzle) {
   }
 }
 
+/**
+ * Fills puzzle grid values down with data from word starting at coords i, j.
+ * @param {*} i 
+ * @param {*} j 
+ * @param {*} word 
+ * @param {*} puzzle 
+ */
 function fillDown(i, j, word, puzzle) {
-
+  for (let i_prime = 0; i_prime < word.length; i_prime++) {
+    puzzle.grid[i+i_prime][j].value = word[i_prime]
+  }
 }
 
 function populateAnswers(puzzle) {
