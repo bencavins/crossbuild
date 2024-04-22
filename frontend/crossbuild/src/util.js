@@ -32,6 +32,33 @@ export function autoNumberGrid(grid) {
     return grid
 }
 
+export function getClues(grid) {
+    const clues = {
+      across: {},
+      down: {}
+    }
+    for (let row of grid) {
+      for (let cell of row) {
+        if (cell.number) {
+          if (isAcross(cell, grid)) {
+            const n = getAcrossLength(cell, grid)
+            clues.across[cell.number] = {
+              'text': `Test clue ${cell.number}A`,
+              'answer': 'X'.repeat(n),
+              'length': n
+            }
+          }
+          if (isDown(cell, grid)) {
+            const n = getDownLength(cell, grid)
+            clues.down[cell.number] = {
+              'text': `Test clue ${cell.number}D`,
+              'answer': 'X'.repeat(n),
+              'length': n
+            }
+    }}}}
+    return clues
+  }
+
 /**
  * Returns true if the cell begins an across clue
  * @param {[object]} cell 
