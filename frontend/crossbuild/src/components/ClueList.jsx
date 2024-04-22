@@ -1,6 +1,6 @@
 import Clue from "./Clue"
 
-export default function ClueList({ clues }) {
+export default function ClueList({ clues, saveClue }) {
 
 //   console.log(Object.entries(clues).map(([num, data]) => console.log(data)))
   return <div className="clue-list">
@@ -10,7 +10,8 @@ export default function ClueList({ clues }) {
         num={num} 
         text={data.text} 
         length={data.length} 
-        answer={data.answer} />
+        answer={data.answer}
+        saveClue={saveClue} />
     })}
   </div>
 }
